@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="API/Makitools.API.csproj" />
+  <Project Path="Makitools.Application/Makitools.Application.csproj" Id="7e4b30ac-4a99-4c9c-87d2-119d97b993ea" />
+  <Project Path="Makitools.Domain/Makitools.Domain.csproj" />
+  <Project Path="Makitools.Infrastructure/Makitools.Infrastructure.csproj" />
+</Solution>
