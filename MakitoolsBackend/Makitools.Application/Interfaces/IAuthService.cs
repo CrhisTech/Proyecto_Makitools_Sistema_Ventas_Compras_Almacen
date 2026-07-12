@@ -8,6 +8,8 @@ namespace Makitools.Application.Interfaces
 {
     public interface IAuthService
     {
-        Task<UsuarioResponseDto> LoginAsync(LoginRequestDto request);
+        Task<UsuarioAuthResponseDto> LoginAsync(LoginRequestDto request);
+        Task<bool> SolicitarRecuperacionPasswordAsync(ForgotPasswordRequestDto request);
+        Task<bool> ReestablecerPasswordAsync(ResetPasswordRequestDto request);
     }
 }

@@ -35,5 +35,11 @@ namespace Makitools.Infrastructure.Repositories.Implementations
             await _context.Categorias.AddAsync(categoria);
             await _context.SaveChangesAsync();
         }
+
+        public async Task ActualizarCategoriaAsync(Categoria categoria)
+        {
+            _context.Categorias.Update(categoria);
+            await _context.SaveChangesAsync();
+        }
     }
 }

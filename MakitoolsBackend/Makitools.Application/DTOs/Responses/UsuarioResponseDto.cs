@@ -12,7 +12,6 @@ namespace Makitools.Application.DTOs.Responses
         public string Correo { get; set; } = null!;
         public string Rol { get; set; } = null!;
         public DateTime? FechaRegistro { get; set; }
-        public bool? Activo { get;  set; }
-        public int IdRol { get;  set; }
+        public bool? Activo { get; set; }
     }
 }

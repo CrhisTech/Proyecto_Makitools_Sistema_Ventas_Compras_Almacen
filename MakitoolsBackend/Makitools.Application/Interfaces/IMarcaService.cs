@@ -10,5 +10,7 @@ namespace Makitools.Application.Interfaces
         Task<MarcaResponseDto?> BuscarMarcaPorIdAsync(int id);
 
         Task<MarcaResponseDto> CrearMarcaAsync(MarcaCreateRequestDto dto);
+        Task<MarcaResponseDto> ActualizarMarcaAsync(int id, MarcaUpdateRequestDto dto);
+        Task<bool> EliminarMarcaAsync(int id);
     }
 }

@@ -66,5 +66,31 @@ namespace Makitools.Application.Services
             });
             return categoriasDto;
         }
+
+        public async Task<CategoriaResponseDto> ActualizarCategoriaAsync(int id,CategoriaUpdateRequestDto dto)
+        {
+            var categoriaExistente = await _categoriaRepository.ObtenerCategoriaPorIdAsync(id);
+            if (categoriaExistente == null || categoriaExistente.Activo == false)
+                throw new KeyNotFoundException($"La categoria con ID {id} no existe o esta inactiva");
+
+
+            categoriaExistente.Descripcion = dto.Descripcion;
+            await _categoriaRepository.ActualizarCategoriaAsync(categoriaExistente);
+
+            return await BuscarCategoriaPorIdAsync(id)
+                ?? throw new Exception("Error al recuperar el usuario actualizado.");
+        }
+
+        public async Task<bool> EliminarCategoriaAsync(int id)
+        {
+            var categoria = await _categoriaRepository.ObtenerCategoriaPorIdAsync(id);
+            if (categoria == null)
+            {
+                throw new KeyNotFoundException($"La categoria con id: {id} no fue encontrado.");
+            }
+            categoria.Activo = false;
+            await _categoriaRepository.ActualizarCategoriaAsync(categoria);
+            return true;
+        }
     }
 }

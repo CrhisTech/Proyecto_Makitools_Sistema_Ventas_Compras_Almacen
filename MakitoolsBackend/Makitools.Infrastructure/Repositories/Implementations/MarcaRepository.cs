@@ -33,5 +33,11 @@ namespace Makitools.Infrastructure.Repositories.Implementations
             await _context.Marcas.AddAsync(marca);
             await _context.SaveChangesAsync();
         }
+
+        public async Task ActualizarMarcaAsync(Marca marca)
+        {
+            _context.Marcas.Update(marca);
+            await _context.SaveChangesAsync();
+        }
     }
 }

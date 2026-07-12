@@ -46,11 +46,11 @@ namespace Makitools.Infrastructure.Repositories.Implementations
 
         public async Task<string> GenerarNumeroOrdenCompraAsync()
         {
-            var correlativo = await _context.Database
+            var resultado = await _context.Database
                 .SqlQueryRaw<string>("EXEC [Compras].[sp_GenerarNumeroOrdenCompra]")
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
-            return correlativo ?? "OC-000001";
+            return resultado.FirstOrDefault() ?? "OC-000001";
         }
     }
 }

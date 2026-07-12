@@ -12,5 +12,7 @@ namespace Makitools.Application.Interfaces
         Task<CategoriaResponseDto?> BuscarCategoriaPorIdAsync(int id);
 
         Task<CategoriaResponseDto> CrearCategoriaAsync(CategoriaCreateRequestDto dto);
+        Task<CategoriaResponseDto> ActualizarCategoriaAsync(int id, CategoriaUpdateRequestDto dto);
+        Task<bool> EliminarCategoriaAsync(int id);
     }
 }

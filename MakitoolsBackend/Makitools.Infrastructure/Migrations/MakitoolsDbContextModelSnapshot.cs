@@ -252,8 +252,9 @@ namespace Makitools.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Moneda")
-                        .HasColumnType("int");
+                    b.Property<string>("Moneda")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("MontoTotal")
                         .HasColumnType("decimal(18, 2)");
@@ -599,6 +600,12 @@ namespace Makitools.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
+
+                    b.Property<string>("ResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("IdUsuario")
                         .HasName("PK__Usuario__5B65BF9713007378");

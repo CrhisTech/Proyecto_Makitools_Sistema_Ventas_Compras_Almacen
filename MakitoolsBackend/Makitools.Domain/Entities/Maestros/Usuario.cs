@@ -24,6 +24,10 @@ namespace Makitools.Domain.Entities.Maestros
 
         public DateTime? FechaRegistro { get; set; }
 
+        // RECUPERACION DE CONTRASEÑA
+        public string? ResetToken { get; set; }
+        public DateTime? ResetTokenExpires { get; set; }
+
         public virtual ICollection<Compra> Compras { get; set; } = new List<Compra>();
 
         public virtual Rol IdRolNavigation { get; set; } = null!;

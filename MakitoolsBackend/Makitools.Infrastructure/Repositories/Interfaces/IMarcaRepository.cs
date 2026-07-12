@@ -7,5 +7,6 @@ namespace Makitools.Infrastructure.Repositories.Interfaces
         Task<IEnumerable<Marca>> ObtenerMarcasActivasAsync();
         Task<Marca?> ObtenerMarcaPorIdAsync(int id);
         Task GuardarMarcaAsync(Marca marca);
+        Task ActualizarMarcaAsync(Marca marca);
     }
 }

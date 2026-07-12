@@ -15,6 +15,19 @@ namespace Makitools.Application.Services
             _marcaRepository = marcaRepository;
         }
 
+        public async Task<MarcaResponseDto> ActualizarMarcaAsync(int id, MarcaUpdateRequestDto dto)
+        {
+            var marcaExistente = await _marcaRepository.ObtenerMarcaPorIdAsync(id);
+            if (marcaExistente == null || marcaExistente.Activo == false)
+                throw new KeyNotFoundException($"La Marca con id {id} no existe o esta inactiva.");
+
+            marcaExistente.Descripcion = dto.Descripcion;
+            await _marcaRepository.ActualizarMarcaAsync(marcaExistente);
+            return await BuscarMarcaPorIdAsync(id)
+                ?? throw new Exception("Error al recuperar el usuario actualizado");
+        }
+            
+
         public async Task<MarcaResponseDto?> BuscarMarcaPorIdAsync(int id)
         {
             var marca = await _marcaRepository.ObtenerMarcaPorIdAsync(id);
@@ -50,6 +63,18 @@ namespace Makitools.Application.Services
                 Activo = marcaGuardada.Activo,
                 FechaRegistro = marcaGuardada.FechaRegistro
             };
+        }
+
+        public async Task<bool> EliminarMarcaAsync(int id)
+        {
+            var marca = await _marcaRepository.ObtenerMarcaPorIdAsync(id);
+            if(marca == null)
+            {
+                throw new KeyNotFoundException($"La marca con id: {id} no fue encontrado.");
+            }
+            marca.Activo = false;
+            await _marcaRepository.ActualizarMarcaAsync(marca);
+            return true;
         }
 
         public async Task<IEnumerable<MarcaResponseDto>> ListarMarcasAsync()

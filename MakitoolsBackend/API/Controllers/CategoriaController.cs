@@ -38,5 +38,39 @@ namespace Makitools.API.Controllers
             var categoriaNuevo = await _categoriaService.CrearCategoriaAsync(request);
             return StatusCode(201, categoriaNuevo);
         }
+
+        // PUT. /api/categoria/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ActualizarCategoria(int id, [FromBody] CategoriaUpdateRequestDto request)
+        {
+            try
+            {
+                var resultado = await _categoriaService.ActualizarCategoriaAsync(id, request);
+                return Ok(resultado);
+            }
+            catch(KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+            catch(ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        // DELETE. /api/categoria/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> EliminarCategoria(int id)
+        {
+            try
+            {
+                await _categoriaService.EliminarCategoriaAsync(id);
+                return Ok(new { message = "Categoria eliminada correctamente." });
+            }
+            catch(KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
     }
 }

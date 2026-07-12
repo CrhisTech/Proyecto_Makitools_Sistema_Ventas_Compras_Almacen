@@ -28,5 +28,25 @@ namespace Makitools.API.Controllers
                 return Unauthorized(new {message =  ex.Message});
             }
         }
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequestDto request)
+        {
+            await _authService.SolicitarRecuperacionPasswordAsync(request);
+            return Ok();
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestDto request)
+        {
+            try
+            {
+                await _authService.ReestablecerPasswordAsync(request);
+                return Ok("La contraseña ha sido reestablecida con éxito!");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }
