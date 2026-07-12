@@ -1,0 +1,38 @@
+name: Desplegar Backend a Azure App Service
+
+# El robot se activará cada vez que hagas un push a la rama principal (main o master)
+on:
+  push:
+    branches:
+      - main
+      - master
+    # Solo se activa si hay cambios dentro de la carpeta del backend
+    paths:
+      - 'MakitoolsBackend/**'
+
+env:
+  AZURE_WEBAPP_NAME: makitools-api  # Reemplaza si le pusiste otro nombre a tu App Service
+  DOTNET_VERSION: '10.0.x'          # La versión de tu SDK
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Descargar el código del repositorio
+        uses: actions/checkout@v3
+
+      - name: 2. Instalar .NET Core ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: 3. Restaurar, Compilar y Publicar la API
+        run: dotnet publish MakitoolsBackend/API/Makitools.API.csproj -c Release -o ${{ env.DOTNET_ROOT }}/myapp
+
+      - name: 4. Desplegar a Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ${{ env.DOTNET_ROOT }}/myapp
